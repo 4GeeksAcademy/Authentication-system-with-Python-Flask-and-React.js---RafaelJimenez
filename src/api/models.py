@@ -8,7 +8,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def __init__(self, email, password, is_active):
+    def __init__(self, email, password):
         self.email = email
         self.password = password
         self.is_active = True

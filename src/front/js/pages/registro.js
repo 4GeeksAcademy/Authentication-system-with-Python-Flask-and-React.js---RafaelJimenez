@@ -8,58 +8,29 @@ export const Registro = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate();
 
-    const [itemViajero, setItemViajero] = useState({
-        type_person: "V",
-        cedula: "",
-        name: "",
-        lastname: "",
-        dates_of_birth: "",
-        phone: "",
-        user_id: ""
-    });
-
     const [itemUser, setItemUser] = useState({
-        username: "",
-        userconfirm: "",
-        password: "",
-        passconfirm: "",
-        correo: ""
+        email: "",
+        password: ""
     });
 
     const ValidarCamposUser = () => {
-        if (itemUser.username == "" || itemUser.username == null) return false;
-        if (itemUser.userconfirm == "" || itemUser.userconfirm == null) return false;
-        if (itemUser.username != itemUser.userconfirm) return false;
+        if (itemUser.email == "" || itemUser.email == null) return false;
         if (itemUser.password == "" || itemUser.password == null) return false;
-        if (itemUser.passconfirm == "" || itemUser.passconfirm == null) return false;
-        if (itemUser.password != itemUser.passconfirm) return false;
-        if (itemUser.correo == "" || itemUser.correo == null) return false;
         return true;
     };
 
-    const ValidarCamposViajero = () => {
-        if (itemViajero.type_person == "" || itemViajero.type_person == null) return false;
-        if (itemViajero.cedula == "" || itemViajero.cedula == null) return false;
-        if (itemViajero.name == "" || itemViajero.name == null) return false;
-        if (itemViajero.lastname == "" || itemViajero.lastname == null) return false;
-        if (itemViajero.dates_of_birth == "" || itemViajero.dates_of_birth == null) return false;
-        if (itemViajero.phone == "" || itemViajero.phone == null) return false;
-        return true;
-    };
-
-    const InsertNewViajero = async () => {
-        if (ValidarCamposUser() && ValidarCamposViajero()) {
+    const InsertNewUser = async () => {
+        console.log(itemUser);
+        if (ValidarCamposUser()) {
             let user = {
-                username: itemUser.username,
-                email: itemUser.correo,
+                email: itemUser.email,
                 password: itemUser.password,
-                rol: 2
                 // "is_active" : true
             }
-            let resp = await actions.newViajero(itemViajero, user);
+            let resp = await actions.newUser(user);
             if (resp) {
                 //alert("Bienvenido ha ingresado con exito!");
-                swal("Viajero registrado", "Se ha registrado con exito!", "success");
+                swal("Usuario registrado", "Se ha registrado con exito!", "success");
                 navigate('/login');
             }
             else {
@@ -82,10 +53,10 @@ export const Registro = () => {
                             <input type="text" class="form-control" id="floatingInputGrid" onChange={event => {
                                 setItemUser({
                                     ...itemUser,
-                                    username: event.target.value
+                                    email: event.target.value
                                 });
                             }} />
-                            <label for="floatingSelectGrid">Nombre de Usuario</label>
+                            <label for="floatingSelectGrid">Email</label>
                         </div>
                     </div>
                     <div className="col-md-6 col-sm-6 col-xs-3 mb-2">
@@ -104,17 +75,13 @@ export const Registro = () => {
 
                 <div className="row d-flex justify-content-center  m-2">
                     <div className="d-flex justify-content-center col-md-6 col-sm-5 col-xs-3 px-0">
-                        <button type="submit" onClick={() => InsertNewViajero()} className="col-10 btn btn-travelink btn-outline-info rounded-pill">Aceptar</button>
+                        <button type="submit" onClick={() => InsertNewUser()} className="col-10 btn btn-travelink btn-outline-info rounded-pill">Aceptar</button>
                     </div>
                     <Link to="/login" className="d-flex justify-content-center col-md-6 col-sm-5 col-xs-3 px-0 d-flex">
                         <button type="button" className="col-10 btn btn-travelink btn-outline-info rounded-pill">Volver</button>
                     </Link>
                 </div>
 
-                {/* <div className="row d-flex justify-content-center m-2 mt-4">
-                    <button type="file" className="col-md-5 col-sm-5 col-xs-3 mx-1 btn btn-primary">Aceptar</button>
-                    <button type="submit" className="col-md-5 col-sm-5 col-xs-3 mx-1 btn btn-primary">Volver</button>
-                </div> */}
             </div>
         </div >
     )

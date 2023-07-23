@@ -19,7 +19,7 @@ export const Navbar = () => {
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 				</Link>
 				<div className="ml-auto">
-					<Link to="/demo" className="me-3">
+					<Link to={actions.gotopage("/demo")} className="me-3">
 						<button className="btn btn-secondary">Check the Context in action</button>
 					</Link>
 					{
@@ -28,10 +28,7 @@ export const Navbar = () => {
 								<button className="btn btn-primary ">Iniciar Sesión</button>
 							</Link>
 							:
-							<div className="d-flex justify-content-between align-items-center ">
-								<span className="me-2">{store.user}</span>
-								<button onClick={() => LogOut()} className="btn btn-outline-info rounded-pill m-0">Cerrar Sesión</button>
-							</div>
+							<button onClick={() => LogOut()} className="btn btn-outline-danger m-0">Cerrar Sesión</button>
 					}
 				</div>
 			</div>

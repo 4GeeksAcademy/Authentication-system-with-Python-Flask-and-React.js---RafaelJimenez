@@ -10,7 +10,7 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
 
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: ""
   })
 
@@ -18,13 +18,11 @@ export const Login = () => {
 
   useEffect(() => {
     if (store.token)
-      if (store.rol == 1)
-        navigate('/profileAgency')
-    if (store.rol == 2)
-      navigate('/profileViajero')
+      navigate('/demo')
   }, [store.token])
 
   const iniciarSesion = async () => {
+    console.log(credentials);
     let respond = await actions.login(credentials);
     console.log(respond);
     if (respond) {
@@ -62,10 +60,10 @@ export const Login = () => {
                         <div className="form-outline mb-4">
                           <input type="email" id="form2Example11" className="form-control"
                             value={credentials.username}
-                            placeholder="Username" onChange={event => {
+                            placeholder="Email" onChange={event => {
                               setCredentials({
                                 ...credentials,
-                                username: event.target.value
+                                email: event.target.value
                               });
                             }} />
                         </div>

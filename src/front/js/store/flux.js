@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const user = sessionStorage.getItem("user");
 				const idUser = sessionStorage.getItem("idUser");
 				if (token && token != "" && token != undefined) {
-					setStore({ token: token, user: user, rol: rol, idAgencia: idAgencia, idViajero: idViajero, idUser: idUser })
+					setStore({ token: token, user: user, idUser: idUser })
 				}
 			},
 
@@ -98,6 +98,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.removeItem('token');
 				sessionStorage.removeItem('user');
 				sessionStorage.removeItem('idUser');
+			},
+
+			newUser: async (user) => {
+				let data = "";
+				console.log(user);
+				const respUser = await fetch(process.env.BACKEND_URL + "/api/signup", {
+					method: "POST",
+					mode: "cors",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(user) // body data type must match "Content-Type" header
+				})
+				data = await respUser.json();
+				console.log(respUser);
+				if (respUser.status != 200) return false;
+				return true;
+			},
+
+			gotopage: (toPage) => {
+				const store = getStore();
+				if (!store.token) {
+					return "/login";
+				}else{
+					return toPage;
+				}
 			},
 		}
 	};
